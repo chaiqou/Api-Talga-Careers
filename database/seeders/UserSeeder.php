@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
-    use TruncateTable, DisableForeignKeys;
+    use TruncateTable;
+    use DisableForeignKeys;
     /**
      * Run the database seeds.
      *
@@ -19,10 +20,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-         $this->disableForeignKeys();
-         $this->truncateTable('users');
-         $users = User::factory(10)->create();
-         $this->enableForeignKeys();
-
+        $this->disableForeignKeys();
+        $this->truncateTable('users');
+        $users = User::factory(10)->create();
+        $this->enableForeignKeys();
     }
 }

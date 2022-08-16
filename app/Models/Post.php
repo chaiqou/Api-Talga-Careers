@@ -16,4 +16,9 @@ class Post extends Model
     protected $casts = [
         'body' => 'array',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id');
+    }
 }

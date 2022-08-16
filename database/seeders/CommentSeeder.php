@@ -11,7 +11,8 @@ use Illuminate\Database\Seeder;
 
 class CommentSeeder extends Seeder
 {
-    use DisableForeignKeys, TruncateTable;
+    use DisableForeignKeys;
+    use TruncateTable;
     /**
      * Run the database seeds.
      *
@@ -23,6 +24,5 @@ class CommentSeeder extends Seeder
         $this->truncateTable('comments');
         $users = Comment::factory(10)->create();
         $this->enableForeignKeys();
-
     }
 }

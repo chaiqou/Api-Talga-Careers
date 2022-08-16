@@ -10,5 +10,4 @@ trait TruncateTable
     {
         DB::table($table)->truncate();
     }
-
 }
