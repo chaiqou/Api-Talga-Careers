@@ -6,6 +6,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
 
 class CommentController extends Controller
 {
@@ -18,7 +19,7 @@ class CommentController extends Controller
     {
         $comments = Comment::query()->get();
 
-        return response()->json($comments);
+        return CommentResource::collection($comments);
     }
 
     /**
@@ -33,7 +34,7 @@ class CommentController extends Controller
             'body' => $request->body,
   ]);
 
-        return response()->json($created);
+        return new CommentResource($created);
     }
 
     /**
@@ -44,7 +45,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return response()->json($comment);
+        return new CommentResource($comment);
     }
 
     /**
@@ -60,7 +61,7 @@ class CommentController extends Controller
             'body' => $request->body ?? $comment->body,
         ]);
 
-        return response()->json($comment);
+        return new CommentResource($comment);
     }
 
     /**

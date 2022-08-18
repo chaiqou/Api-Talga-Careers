@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -17,7 +19,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::query()->get();
-        return response()->json($posts);
+        return PostResource::collection($posts);
     }
 
     /**
@@ -28,12 +30,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $created = Post::query()->create([
-            'title' => $request->title,
-            'body' => $request->body,
-          ]);
+        $created =  DB::transaction(function () use ($request) {
+            $created = Post::query()->create([
+                'title' => $request->title,
+                'body' => $request->body,
+              ]);
 
-        return response()->json($created);
+            $created->users()->sync($request->$user_ids);
+
+            return $created;
+        });
+
+
+
+
+        return new PostResource($created);
     }
 
     /**
@@ -44,7 +55,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return response()->json($post);
+        return new PostResource($post);
     }
 
     /**
@@ -67,7 +78,7 @@ class PostController extends Controller
               ], 400);
         }
 
-        return response()->json($post);
+        return new PostResource($post);
     }
 
     /**
@@ -80,6 +91,8 @@ class PostController extends Controller
     {
         $deleted = $post->delete();
 
-        return response()->json($deleted);
+        return response()->json([
+            'deleted' => $deleted,
+          ], 200);
     }
 }
