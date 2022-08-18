@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
-use App\Models\Comment;
 
 class CommentController extends Controller
 {
@@ -15,7 +16,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::query()->get();
+
+        return response()->json($comments);
     }
 
     /**
@@ -24,9 +27,13 @@ class CommentController extends Controller
      * @param  \App\Http\Requests\StoreCommentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCommentRequest $request)
+    public function store(Request $request)
     {
-        //
+        $created = Comment::query()->create([
+            'body' => $request->body,
+  ]);
+
+        return response()->json($created);
     }
 
     /**
@@ -37,7 +44,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        return response()->json($comment);
     }
 
     /**
@@ -47,9 +54,13 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        $comment->update([
+            'body' => $request->body ?? $comment->body,
+        ]);
+
+        return response()->json($comment);
     }
 
     /**
@@ -60,6 +71,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return response()->json(['message' => 'Comment deleted']);
     }
 }
