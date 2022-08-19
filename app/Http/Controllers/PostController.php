@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
-use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\PostResource;
+use App\Http\Requests\StorePostRequest;
+use App\Exceptions\GeneralJsonException;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::query()->get();
+        $posts = Post::query()->paginate(3);
         return PostResource::collection($posts);
     }
 
@@ -72,12 +73,7 @@ class PostController extends Controller
             'body' => $request->body ?? $post->body,
           ]);
 
-        if (!$updated) {
-            return response()->json([
-                'errors' => 'Post not updated',
-              ], 400);
-        }
-
+        throw_if(!$updated, GeneralJsonException::class, 'Post not updated');
         return new PostResource($post);
     }
 
