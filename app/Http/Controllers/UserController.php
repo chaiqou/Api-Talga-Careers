@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Events\UserCreated;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 
@@ -31,6 +32,8 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
      ]);
+
+        event(new UserCreated($created));
 
         return new UserResource($created);
     }
