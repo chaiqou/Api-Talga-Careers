@@ -17,7 +17,7 @@ class UserCreated
     use InteractsWithSockets;
     use SerializesModels;
 
-    protected $user;
+    public $user;
 
     /**
      * Create a new event instance.
