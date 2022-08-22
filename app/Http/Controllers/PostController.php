@@ -9,6 +9,7 @@ use App\Http\Resources\PostResource;
 use App\Http\Requests\StorePostRequest;
 use App\Exceptions\GeneralJsonException;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -31,6 +32,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->only(['title', 'body']), [
+            'title' => 'required|string|max:255',
+            'body' => 'required|string|max:255',
+        ]);
+
+
+
+        $validator->validate();
+
+
         $created =  DB::transaction(function () use ($request) {
             $created = Post::query()->create([
                 'title' => $request->title,
@@ -41,9 +52,6 @@ class PostController extends Controller
 
             return $created;
         });
-
-
-
 
         return new PostResource($created);
     }
