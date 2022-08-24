@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use Hash;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -31,5 +33,28 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return response(['message' => 'Token deleted'], 201);
+    }
+
+    public function login(LoginRequest $request)
+    {
+        // check email
+        $user = User::where('email', $request->email)->first();
+
+
+        // check password
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response(['message' => 'Bad Password'], 401);
+        }
+
+
+        $token = $user->createToken('chemiaplikaciistokeni')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token,
+        ];
+
+
+        return response($response, 201);
     }
 }

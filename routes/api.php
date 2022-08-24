@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('posts', PostController::class);
 Route::apiResource('jobs', JobController::class);
 Route::post('registration', [AuthController::class, 'register'])->name('user.registration');
+Route::post('login', [AuthController::class, 'login'])->name('user.login');
 
 
 
