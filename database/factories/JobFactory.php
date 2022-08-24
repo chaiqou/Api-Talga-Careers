@@ -17,7 +17,9 @@ class JobFactory extends Factory
     public function definition()
     {
         return [
-            //
-        ];
+            'title' => $this->faker->sentence(),
+            'city' => $this->faker->city(),
+            'company' => $this->faker->company(),
+];
     }
 }
