@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Database\Console\DumpCommand;
 use Illuminate\Http\JsonResponse;
@@ -20,3 +22,4 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource('posts', PostController::class);
+Route::apiResource('jobs', JobController::class);

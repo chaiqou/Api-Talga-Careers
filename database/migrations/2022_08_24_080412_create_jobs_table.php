@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('title');
             $table->string('city');
             $table->string('company');
-            $table->json('requirements')->nullable();
+            $table->string('requirements');
             $table->timestamps();
         });
     }
