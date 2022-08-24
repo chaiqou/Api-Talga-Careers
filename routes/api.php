@@ -29,6 +29,8 @@ Route::post('registration', [AuthController::class, 'register'])->name('user.reg
 
 
 
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('all.user');
+    Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
 });
