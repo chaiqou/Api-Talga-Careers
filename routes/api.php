@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
 use App\Models\Job;
 use App\Models\User;
-use Illuminate\Database\Console\DumpCommand;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use Illuminate\Database\Console\DumpCommand;
 
 /*
 |--------------------------------------------------------------------------
