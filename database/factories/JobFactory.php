@@ -9,18 +9,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class JobFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        return [
-            'title' => $this->faker->sentence(),
-            'city' => $this->faker->city(),
-            'company' => $this->faker->company(),
-            'requirements' => $this->faker->word(),
-        ];
-    }
+	/**
+	 * Define the model's default state.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function definition()
+	{
+		return [
+			'title'   => $this->faker->sentence(),
+			'city'    => $this->faker->city(),
+			'company' => $this->faker->companySuffix(),
+		];
+	}
 }
