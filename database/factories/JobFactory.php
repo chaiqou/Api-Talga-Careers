@@ -17,9 +17,10 @@ class JobFactory extends Factory
 	public function definition()
 	{
 		return [
-			'title'   => $this->faker->sentence(),
-			'city'    => $this->faker->city(),
+			'title'   => $this->faker->jobTitle(),
+			'city'    => $this->faker->citySuffix(),
 			'company' => $this->faker->companySuffix(),
+			'jobType' => $this->faker->time(),
 		];
 	}
 }
