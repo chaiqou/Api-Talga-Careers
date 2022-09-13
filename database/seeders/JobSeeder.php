@@ -22,7 +22,7 @@ class JobSeeder extends Seeder
 	{
 		$this->disableForeignKeys();
 		$this->truncateTable('jobs');
-		$users = Job::factory(50)->create();
+		$users = Job::factory(1000)->create();
 		$this->enableForeignKeys();
 	}
 }

@@ -20,7 +20,7 @@ class JobFactory extends Factory
 			'title'   => $this->faker->jobTitle(),
 			'city'    => $this->faker->citySuffix(),
 			'company' => $this->faker->companySuffix(),
-			'jobType' => $this->faker->time(),
+			'jobType' => $this->faker->jobTitle(),
 		];
 	}
 }
